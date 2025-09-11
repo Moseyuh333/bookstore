@@ -12,7 +12,7 @@ interface Book {
   price: number;
   image: string;
 }
-
+export const dynamic = "force-dynamic";
 export default async function Home() {
   const books: Book[] = await prisma.books.findMany(); // Explicit type to prevent implicit any in map
 
