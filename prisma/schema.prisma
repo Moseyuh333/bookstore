@@ -12,6 +12,12 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+model books {
+  id     Int     @id @default(autoincrement())
+  title  String
+  price  Float
+  image  String
+}
 
 
 
