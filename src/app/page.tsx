@@ -34,7 +34,7 @@ export default async function Home() {
             Đặt món nhanh chóng cho cửa hàng của bạn
           </h1>
           <p className="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-            Giao diện gọi món hiện đại, QR order, quản lý đơn hàng thời gian thực. Lấy cảm hứng từ trải nghiệm mượt mà như torder.
+            Giao diện menu hiện đại, QR order, quản lý đơn hàng thời gian thực. Lấy cảm hứng từ trải nghiệm mượt mà như torder.
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
             <a href="#demo" className="rounded-md bg-gray-900 px-6 py-3 text-white font-medium hover:bg-black">Dùng thử ngay</a>
