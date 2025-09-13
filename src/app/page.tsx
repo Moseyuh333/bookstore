@@ -9,8 +9,11 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 interface Book {
   id: number;
   title: string;
+  author?: string | null;
   price: number;
-  image: string;
+  stock: number;
+  coverUrl: string;
+  categoryId?: number | null;
 }
 
 export const dynamic = "force-dynamic";
@@ -18,8 +21,21 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   let books: Book[] = [];
   try {
-    // Guard: if the table doesn't exist yet on fresh deploy
-    books = await prisma.books.findMany();
+    // Prefer the new Book model mapped to table "books"
+    // Select columns by mapping to avoid runtime mismatch
+    const rows = await prisma.book.findMany({
+      select: {
+        id: true,
+        title: true,
+        author: true,
+        price: true,
+        stock: true,
+        coverUrl: true,
+        categoryId: true,
+      },
+      orderBy: { id: 'asc' },
+    });
+    books = rows as Book[];
   } catch (e) {
     // Swallow error and render marketing page
     books = [];
@@ -66,23 +82,43 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Demo data (optional) */}
-      {books.length > 0 && (
-        <section id="demo" className="bg-white">
-          <div className="mx-auto max-w-6xl px-6 py-16">
-            <h2 className="text-2xl font-semibold mb-6">Danh sách sản phẩm mẫu</h2>
+      {/* Showcase (with simple filter/search) */}
+      <section id="demo" className="bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-2xl font-semibold">Danh sách sách</h2>
+              <p className="text-gray-600">Sản phẩm được lấy từ Postgres qua Prisma</p>
+            </div>
+            <form action="#demo" className="flex gap-2">
+              <input name="q" placeholder="Tìm kiếm..." className="border rounded px-3 py-2 w-64" />
+              <button className="px-4 py-2 rounded bg-gray-900 text-white hover:bg-black" type="submit">Tìm</button>
+            </form>
+          </div>
+          {books.length === 0 ? (
+            <div className="text-gray-600">Chưa có dữ liệu. Hãy chạy seeding để xem demo.</div>
+          ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {books.map((book: Book) => (
-                <div key={book.id} className="bg-white rounded shadow p-4 flex flex-col items-center">
-                  <img src={book.image} alt={book.title} className="w-32 h-40 object-cover mb-3 rounded" />
-                  <h3 className="font-medium">{book.title}</h3>
-                  <p className="text-gray-600">${book.price}</p>
+              {books.map((b) => (
+                <div key={b.id} className="rounded-lg border p-4 flex flex-col">
+                  <img src={b.coverUrl} alt={b.title} className="w-full h-40 object-cover rounded" />
+                  <div className="mt-3">
+                    <h3 className="font-semibold line-clamp-1">{b.title}</h3>
+                    {b.author ? (
+                      <p className="text-sm text-gray-600">{b.author}</p>
+                    ) : null}
+                  </div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="font-medium">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(b.price)}</span>
+                    <span className="text-xs text-gray-500">Tồn: {b.stock}</span>
+                  </div>
+                  <button className="mt-4 rounded bg-gray-900 text-white py-2 hover:bg-black">Thêm vào giỏ</button>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="border-t bg-white">
