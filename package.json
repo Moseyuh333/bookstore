@@ -2,10 +2,20 @@
   "name": "bookstore",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "start:heroku": "next start -p $PORT",
+    "heroku-postbuild": "prisma generate && next build",
+    "prisma:generate": "prisma generate",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:push": "prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts",
     "lint": "eslint"
   },
   "dependencies": {

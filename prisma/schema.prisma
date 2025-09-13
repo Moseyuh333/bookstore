@@ -12,11 +12,26 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-model books {
-  id     Int     @id @default(autoincrement())
-  title  String
-  price  Float
-  image  String
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  books Book[]
+
+  @@map("category")
+}
+
+model Book {
+  id         Int      @id @default(autoincrement())
+  title      String
+  author     String?
+  price      Float
+  stock      Int      @default(0)
+  coverUrl   String   @map("image")
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  @@map("books")
 }
 
 
