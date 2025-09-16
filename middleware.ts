@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from 'next/server';
 // Defaults: admin., order., auth.
 
 export function middleware(req: NextRequest) {
+  if (process.env.DISABLE_MIDDLEWARE === '1') {
+    return NextResponse.next();
+  }
   const url = req.nextUrl.clone();
   const host = req.headers.get('host') || '';
 
