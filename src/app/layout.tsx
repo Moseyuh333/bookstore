@@ -1,5 +1,7 @@
 import './globals.css';
 import { ReactNode } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Bookstore',
@@ -10,10 +12,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="vi">
       <body className="bg-gray-50">
-        <header className="bg-gray-800 text-white px-6 py-4">
-          <h1 className="text-xl font-bold">📚 Bookstore</h1>
-        </header>
-        <main className="p-6">{children}</main>
+        <Header />
+        <main className="p-6 pt-4">{children}</main>
+        <Footer />
       </body>
     </html>
   );

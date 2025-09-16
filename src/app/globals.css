@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 /* Global resets/additions */
+html, body { margin: 0; }
 body {
-  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }

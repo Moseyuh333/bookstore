@@ -44,17 +44,22 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-gray-900">
+      <section className="relative">
+        <div className="absolute inset-0 -z-10">
+          <img className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop" alt="Hero background" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28 text-center text-white">
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Đặt món nhanh chóng cho cửa hàng của bạn
           </h1>
-          <p className="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-            Giao diện menu hiện đại, QR order, quản lý đơn hàng thời gian thực. Lấy cảm hứng từ trải nghiệm mượt mà như torder.
+          <p className="mt-6 text-lg sm:text-xl max-w-3xl mx-auto opacity-95">
+            Giao diện hiện đại như t-order: QR order, quản lý đơn thời gian thực, tối ưu cho mobile.
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
-            <a href="#demo" className="rounded-md bg-gray-900 px-6 py-3 text-white font-medium hover:bg-black">Dùng thử ngay</a>
-            <a href="#features" className="rounded-md border border-gray-300 px-6 py-3 text-gray-900 font-medium hover:bg-gray-50">Tính năng</a>
+            <a href="#demo" className="rounded-md bg-white text-gray-900 px-6 py-3 font-medium hover:bg-gray-100">Bắt đầu ngay</a>
+            <a href="#features" className="rounded-md border border-white/70 px-6 py-3 font-medium hover:bg-white/10">Tính năng</a>
+            <a href="/auth/login" className="rounded-md border border-white/70 px-6 py-3 font-medium hover:bg-white/10">Đăng nhập</a>
           </div>
         </div>
       </section>
@@ -96,7 +101,9 @@ export default async function Home() {
             </form>
           </div>
           {books.length === 0 ? (
-            <div className="text-gray-600">Chưa có dữ liệu. Hãy chạy seeding để xem demo.</div>
+            <div className="text-gray-600">
+              <div className="rounded-md border p-6 bg-white">Chưa có sản phẩm nào. Hãy seeding dữ liệu để xem demo.</div>
+            </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {books.map((b) => (
